@@ -1,0 +1,48 @@
+#buttons {
+    width: 500px;
+}
+
+#numbers {
+    display: grid;
+    float:left;
+    grid-template-columns: repeat(3, 1fr);
+    width: 400px;
+    
+}
+
+.number {
+    height: 50px;
+    background-color: navajowhite;
+}
+
+#operators {
+    float: left;
+    width: 100px;
+    height: 200px;
+}
+.operator {
+    width: 100%;
+    height: 25%;
+    background-color: aquamarine;
+    font-size: 20px;
+}
+
+#otherButtons {
+    display: grid;
+    grid-template-columns: repeat(3,1fr) 100px;
+    height: 50px;
+    width: 100%;
+}
+
+.other {
+    background-color: palegreen;
+}
+
+#equal{
+    font-size: 20px;
+    background-color:  rgb(93, 241, 197);
+}
+p {
+    height: 50px;
+    font-size: 20px;
+}

@@ -10,7 +10,35 @@ equal.addEventListener('click', calc);
 const clear = document.querySelector('#clear');
 clear.addEventListener('click', clearCalc);
 
-let a = 0, b = '', o = 0, opUsed = false;
+const decimal = document.querySelector('#decimal');
+decimal.addEventListener('click', decimalInput);
+
+const backspace = document.querySelector('#backspace');
+backspace.addEventListener('click', delNum);
+
+const p = document.querySelector('p');
+
+let a = 0, aS = '', b = '', o = 0, opUsed = false, decUsed = false;
+
+function delNum() {
+    const text = p.textContent;
+    if(opUsed) {
+        b = b.slice(0,-1);
+        p.textContent = aS + b;
+    } else {
+        p.textContent = text.slice(0, -1);    
+    }
+}
+
+function decimalInput() {
+    if(!decUsed){
+        if(opUsed) {
+            b += '.';
+        }
+        p.textContent += '.';
+        decUsed = true;
+    }
+}
 
 function clearCalc() {
     const p = document.querySelector('p');
@@ -23,21 +51,29 @@ function calc() {
     switch (o) {
         case 1: 
             x = operate('add', a, Number(b));
+            x = Math.round(x*100)/100;
             displaySolution(x);
             return x;
             break;
         case 2: 
             x = operate('subtract', a, Number(b));
+            x = Math.round(x*100)/100;
             displaySolution(x);
             return x;
             break;
         case 3: 
             x = operate('multiply', a, Number(b));
+            x = Math.round(x*100)/100;
             displaySolution(x);
             return x;
             break;
         case 4:
+            if (b == 0) {
+                p.textContent = 'Infinity';
+                break;
+            }
             x = operate('divide', a, Number(b));
+            x = Math.round(x*100)/100;
             displaySolution(x);
             return x;
             break;
@@ -45,11 +81,10 @@ function calc() {
 }
 
 function displaySolution(n) {
-    const p = document.querySelector('p');
     p.textContent = n;
 }
+
 function displayNumber() {
-    const p = document.querySelector('p');
     const text = p.textContent;   
     const n = this.textContent;
     if (opUsed) b += n;
@@ -58,31 +93,35 @@ function displayNumber() {
 
 function setOperator() {
     const op = this.textContent;
-    const p = document.querySelector('p');
     if (opUsed) {
         let x = calc();
         a = x;
-        b = 0;
+        b = '';
     }
     const num = p.textContent;
     a = Number(num);
     opUsed = true;
+    decUsed = false;
     switch (op) {
         case '+':
             o = 1;
-            p.textContent = num + ' + ';
+            aS = num + ' + ';
+            p.textContent = aS;
             break;
         case '-':
             o = 2;
-            p.textContent = num + ' - ';
+            aS = num + ' - ';
+            p.textContent = aS;
             break;
         case '*':
             o = 3;
-            p.textContent = num + ' * ';
+            aS = num + ' * ';
+            p.textContent = aS;
             break;
         case '/':
             o = 4;
-            p.textContent = num + ' / ';
+            aS = num + ' / ';
+            p.textContent = aS;
             break;
     }     
 }
